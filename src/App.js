@@ -1,7 +1,9 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Grid, Paper, Divider } from '@material-ui/core';
+import { AppBar, Toolbar, Button } from '@material-ui/core';
+import ResumenDeGastos from "./gastos/resumenDeGastos/Resumen";
+import HistorialGastos from './gastos/historial/HistorialSetUp';
 
 const styles = () => ({
   root: {
@@ -24,6 +26,50 @@ const styles = () => ({
 });
 
 class App extends React.Component{
+  getData = () =>{
+
+    console.log(
+      `Vamos ejecutamos el siguiente codigo:
+        getData = () =>{
+          const myHeaders = new Headers({
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36'
+          });
+          var config = { method: 'GET',
+                        headers: misCabeceras,
+                        mode: 'cors',
+                        cache: 'default' };
+          fetch('localhost:420/gastos',config).then(response => {
+                                            console.log("Estamos en el primer then")
+                                            console.log(response)
+                                            return response.json()
+                                          })
+                                    .then(response2 => {
+                                            console.log("Estamos en el segundo then")
+                                            console.log(response2)
+                                    })
+                                    .catch(err => console.log(err))
+          }
+        }
+      `
+    )
+
+    const myHeaders = new Headers({
+      'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36'
+    });
+
+    var config = { method: 'GET', headers: myHeaders };
+
+    fetch('http://localhost:420/gastos',config).then(response => {
+                                      console.log("Estamos en el primer then")
+                                      console.log(response)
+                                      return response.json()
+                                    })
+                              .then(response2 => {
+                                      console.log("Estamos en el segundo then")
+                                      console.log(response2)
+                              })
+                              .catch(err => console.log(err))
+  }
   
   render(){
     const { classes } = this.props;
@@ -36,54 +82,14 @@ class App extends React.Component{
           </Typography>
         </Toolbar>
       </AppBar>
-      <Grid container justify="space-around">
-          <Paper className={classes.paper}>
-            <Typography variant="h6" color="inherit" >
-              Ingresos
-            </Typography>
-            <Divider/>
-            <Typography variant="subtitle2" color="inherit" className={classes.tittleDesc}>
-              Totales
-            </Typography>
-            <Typography variant="subtitle2" color="inherit" className={classes.tittleDesc}>
-              Juli
-            </Typography>
-            <Typography variant="subtitle2" color="inherit" className={classes.tittleDesc}>
-              Pancho
-            </Typography>
-          </Paper>
-        <Paper className={classes.paper}>
-            <Typography variant="h6" color="inherit">
-              Gastos
-            </Typography>
-            <Divider/>
-            <Typography variant="subtitle2" color="inherit" className={classes.tittleDesc}>
-              Totales
-            </Typography>
-            <Typography variant="subtitle2" color="inherit" className={classes.tittleDesc}>
-              Juli
-            </Typography>
-            <Typography variant="subtitle2" color="inherit" className={classes.tittleDesc}>
-              Pancho
-            </Typography>
-          </Paper> 
-        <Paper className={classes.paper}>
-            <Typography variant="h6" color="inherit">
-              Disponible
-            </Typography>
-            <Divider />
-            <Typography variant="subtitle2" color="inherit" className={classes.tittleDesc}>
-              Totales
-            </Typography>
-            <Typography variant="subtitle2" color="inherit" className={classes.tittleDesc}>
-              Juli
-            </Typography>
-            <Typography variant="subtitle2" color="inherit" className={classes.tittleDesc}>
-              Pancho
-            </Typography>
-          </Paper>      
+      <div style={{display:'flex', justifyContent: 'center'}}>
+        <Button onClick={this.getData} variant='contained' size='large' color='primary' style={{margin:30}}>
+          Get Data
+        </Button>
 
-      </Grid>
+      </div>
+      <ResumenDeGastos classes={classes}  />
+      <HistorialGastos />
     </div>
     )
   }
